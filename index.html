@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ 我们的周年纪念 ❤️</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+
+    <style>
+        /* ========================================================= */
+        /* CSS 样式部分开始 */
+        /* ========================================================= */
+        
+        /* 自定义 CSS 确保 Apple 风格字体 */
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', 'Roboto', sans-serif;
+            background-color: #F8F8F8; /* 备用背景色 */
+        }
+        
+        /* 通用背景设置样式 */
+        .full-screen-bg {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: relative; /* 确保内部叠加层定位正确 */
+            z-index: 1;
+        }
+
+        /* 登录页背景图（第一张图片） */
+        #login-container {
+            background-image: url('363c74d237af0e1dd0e4cf4286cea297.jpg'); 
+        }
+
+        /* 主内容页背景图（第二张图片） */
+        #main-content {
+            background-image: url('b0570a3f8ffd5348d522a6fb57a25298.jpg');
+        }
+
+        /* 背景图片模糊层（应用在每个内容容器的内部） */
+        .image-blur-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.45); /* 暗化叠加层，确保文字可读性 */
+            backdrop-filter: blur(8px); /* 适度模糊，提升层次感 */
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 0; 
+        }
+
+        /* 登录卡片的毛玻璃背景效果 */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.5); 
+            backdrop-filter: blur(30px); 
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.15);
+            z-index: 10;
+            position: relative; 
+        }
+        
+        /* 登录失败的“摇头”动画 */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        /* 调整主内容区，使其背景更贴合主题 */
+        #main-content section,
+        #main-content footer {
+            background-color: rgba(255, 255, 255, 0.85); /* 半透明白色背景，保证内容可读 */
+            padding: 2.5rem; 
+            border-radius: 2rem; 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
+            margin-bottom: 2rem; 
+            position: relative; 
+            z-index: 10;
+        }
+
+        /* 主页头部文字在深色背景上的样式 */
+        .text-header-light {
+            color: #fff; /* 纯白色 */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* 增加文字阴影，保证可读性 */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-container" class="h-screen flex items-center justify-center transition-opacity duration-1000 full-screen-bg">
+        <div class="image-blur-layer"></div> <div id="login-card" class="glass-card p-8 w-full max-w-sm rounded-3xl shadow-2xl transition-all duration-700 ease-in-out">
+            <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">🔑 输入我们的回忆 🔑</h1>
+            
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-600">账户：我们的纪念日 (YYYYMMDD)</label>
+                <input type="text" id="username" class="mt-1 p-3 w-full border border-gray-300 rounded-xl focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="">
+            </div>
+
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-600">密码：你的专属数字</label>
+                 <input type="password" id="password" class="mt-1 p-3 w-full border border-gray-300 rounded-xl focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="">
+            </div>
+
+            <button id="login-btn" class="w-full bg-pink-600 text-white p-3 rounded-xl font-semibold hover:bg-pink-700 transition duration-300 transform active:scale-95">
+                解锁爱意 ❤️
+            </button>
+        </div>
+    </div>
+
+    <div id="main-content" class="min-h-screen pt-12 pb-20 px-4 sm:px-8 lg:px-16 hidden opacity-0 transition-opacity duration-1000 full-screen-bg">
+        <div class="image-blur-layer"></div> <header class="text-center mb-16 scroll-reveal-item relative z-10">
+            <h1 class="text-6xl font-extrabold text-header-light mb-4">一周年快乐，我的宝贝！</h1> 
+            <p class="text-2xl text-header-light">我们在一起的时光，每一秒都值得珍藏。</p>
+            <div id="timer" class="mt-4 text-5xl font-mono text-pink-300 text-shadow-lg">...</div> 
+        </header>
+
+        <section class="max-w-6xl mx-auto scroll-reveal-item relative z-10">
+            <h2 class="text-4xl font-bold text-gray-800 mb-8">📸 我们的记忆碎片 📸</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                
+                <div class="col-span-2 row-span-2 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
+                    <img src="https://via.placeholder.com/800x600?text=Photo+1" alt="我们的第一次约会" class="w-full h-full object-cover">
+                </div>
+
+                <div class="col-span-2 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
+                    <img src="https://via.placeholder.com/600x400?text=Photo+2" alt="旅行纪念" class="w-full h-full object-cover">
+                </div>
+
+                <div class="col-span-2 bg-pink-500 text-white p-6 rounded-3xl shadow-xl flex items-center justify-center text-center hover:shadow-2xl transition duration-500">
+                    <p class="text-xl font-medium">“自从遇见你，我的世界有了色彩。”</p>
+                </div>
+
+                <div class="col-span-1 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
+                    <img src="https://via.placeholder.com/300x300?text=Photo+3" alt="我们的宠物" class="w-full h-full object-cover">
+                </div>
+                
+                <div class="col-span-1 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
+                    <img src="https://via.placeholder.com/300x300?text=Photo+4" alt="电影票根" class="w-full h-full object-cover">
+                </div>
+                
+                </div>
+        </section>
+
+        <footer class="max-w-4xl mx-auto scroll-reveal-item relative z-10">
+            <h2 class="text-3xl font-bold text-pink-500 mb-4">💌 一封写给你的信 💌</h2>
+            <p class="text-gray-700 text-lg leading-relaxed">
+                (在这里，用一段深情的文字写下你的周年情书，保持简洁大气即可。)
+                <br><br>
+                感谢你这一年来的陪伴，你是我的阳光、星辰和一切。期待我们更多的第一个周年、第二个周年... 我爱你。
+                <br><br>
+                — 爱你的 [你的名字]
+            </p>
+        </footer>
+    </div>
+
+
+    <script>
+        /* ========================================================= */
+        /* JavaScript 逻辑部分开始 */
+        /* ========================================================= */
+        
+        // --- 你的秘密数字 ---
+        const CORRECT_USERNAME = "20240614"; // 你们的纪念日
+        const CORRECT_PASSWORD = "20250125";      // 你们的特殊数字
+        const ANNIVERSARY_DATE = new Date("2024-06-14T00:00:00").getTime(); // 纪念日开始时间 (用于计时器)
+        // -----------------------
+
+        const loginBtn = document.getElementById('login-btn');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginCard = document.getElementById('login-card');
+        const loginContainer = document.getElementById('login-container');
+        const mainContent = document.getElementById('main-content');
+        const timerElement = document.getElementById('timer');
+
+        // 计时器函数
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = now - ANNIVERSARY_DATE;
+
+            if (distance < 0) {
+                const days = Math.ceil(Math.abs(distance) / (1000 * 60 * 60 * 24));
+                timerElement.innerHTML = `距离我们的周年纪念日还有 ${days} 天!`;
+                return;
+            }
+
+            // 正计时
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            timerElement.innerHTML = `${days} 天 ${hours.toString().padStart(2, '0')} 小时 ${minutes.toString().padStart(2, '0')} 分钟 ${seconds.toString().padStart(2, '0')} 秒`;
+        }
+        
+        // 滚动动画初始化函数
+        function initScrollReveal() {
+            if (typeof ScrollReveal === 'undefined') return;
+
+            // 头部、标题、页脚的动画配置
+            ScrollReveal().reveal('.scroll-reveal-item', {
+                delay: 200, 
+                distance: '30px', 
+                origin: 'bottom', 
+                duration: 900, 
+                easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+                interval: 0 
+            });
+            
+            // 照片墙的动画配置
+            ScrollReveal().reveal('.grid > div', {
+                delay: 200,
+                distance: '15px',
+                origin: 'bottom',
+                duration: 600,
+                easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+                interval: 120 
+            });
+        }
+
+        // 登录验证函数
+        function handleLogin() {
+            const enteredUsername = usernameInput.value.trim();
+            const enteredPassword = passwordInput.value.trim();
+
+            if (enteredUsername === CORRECT_USERNAME && enteredPassword === CORRECT_PASSWORD) {
+                // 登录成功
+                
+                // 2. 播放解锁动画 (上滑淡出)
+                loginCard.classList.add('opacity-0', '-translate-y-20'); 
+                
+                setTimeout(() => {
+                    // 3. 隐藏登录页，显示主内容页
+                    loginContainer.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                    
+                    // 4. 主内容页平滑淡入
+                    setTimeout(() => {
+                        mainContent.classList.remove('opacity-0');
+                        // 启动计时器
+                        updateTimer();
+                        setInterval(updateTimer, 1000);
+                        // 初始化滚动动画
+                        initScrollReveal();
+                    }, 50); 
+                    
+                }, 700); 
+                
+            } else {
+                // 登录失败：播放“摇头”动画
+                loginCard.classList.add('shake');
+                setTimeout(() => {
+                    loginCard.classList.remove('shake');
+                }, 500);
+                alert("数字不对哦！这可是我们之间的秘密，再想想！");
+            }
+        }
+
+        // 绑定事件监听器：始终显示登录页，等待用户输入
+        loginBtn.addEventListener('click', handleLogin);
+        passwordInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        });
+        
+    </script>
+</body>
+</html>
