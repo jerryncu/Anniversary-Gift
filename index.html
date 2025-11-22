@@ -413,24 +413,40 @@
         // --- 图片切换/过滤函数 ---
         function filterPhotos(category) {
             const items = document.querySelectorAll('.photo-item');
-            const buttons = document.querySelectorAll('#photo-grid + div button');
+            // 选择所有分类按钮，包括“全部”
+            const buttons = document.querySelectorAll('.flex-wrap button'); 
             
             // 按钮高亮逻辑
             buttons.forEach(btn => {
-                if (btn.id === `btn-${category}` || (category === 'all' && btn.id === 'btn-all')) {
+                // 1. 移除所有按钮的高亮样式 (pink)
+                btn.classList.remove('bg-pink-500', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-800'); // 添加默认样式 (gray)
+
+                // 2. 判断当前按钮是否是应该被激活的按钮
+                let targetCategory = btn.getAttribute('onclick').match(/filterPhotos\(['"](.*?)['"]\)/)[1];
+                
+                if (targetCategory === category) {
+                    // 如果是当前点击的按钮，则添加高亮样式 (pink)
                     btn.classList.remove('bg-gray-200', 'text-gray-800');
                     btn.classList.add('bg-pink-500', 'text-white');
-                } else {
-                    btn.classList.remove('bg-pink-500', 'text-white');
-                    btn.classList.add('bg-gray-200', 'text-gray-800');
                 }
             });
 
-            // 图片显示/隐藏逻辑
+            // 图片显示/隐藏逻辑 (保持不变)
             items.forEach(item => {
-                item.classList.remove('active'); // 移除激活类
-                item.style.display = 'none';    // 隐藏所有
+                item.classList.remove('active'); 
+                item.style.display = 'none';    
             });
+
+            setTimeout(() => {
+                items.forEach(item => {
+                    if (category === 'all' || item.classList.contains(category)) {
+                        item.style.display = 'block';
+                        item.classList.add('active');
+                    }
+                });
+            }, 10);
+        }
 
             // 使用 setTimeout 延迟显示，以便重置动画
             setTimeout(() => {
@@ -510,3 +526,4 @@
     </script>
 </body>
 </html>
+
