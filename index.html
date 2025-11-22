@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️ 我们的周年纪念 ❤️</title>
+    <title>❤️ I love you, 箐！ ❤️</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
@@ -25,17 +25,17 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            position: relative; /* 确保内部叠加层定位正确 */
+            position: relative; 
             z-index: 1;
         }
 
-        /* 登录页背景图（第一张图片） */
-        #login-container { 
-            background-image: url('cover.jpg'); } 
+        /* 登录页背景图 (使用新文件名) */
+        #login-container {
+            background-image: url('cover.jpg'); 
         }
 
-        /* 主内容页背景图（第二张图片） */
-        #main-content { 
+        /* 主内容页背景图 (使用新文件名) */
+        #main-content {
             background-image: url('background.jpg');
         }
 
@@ -46,8 +46,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.45); /* 暗化叠加层，确保文字可读性 */
-            backdrop-filter: blur(8px); /* 适度模糊，提升层次感 */
+            background-color: rgba(0, 0, 0, 0.45); 
+            backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
             z-index: 0; 
         }
@@ -73,10 +73,10 @@
             animation: shake 0.5s;
         }
 
-        /* 调整主内容区，使其背景更贴合主题 */
+        /* 主内容区卡片背景 */
         #main-content section,
         #main-content footer {
-            background-color: rgba(255, 255, 255, 0.85); /* 半透明白色背景，保证内容可读 */
+            background-color: rgba(255, 255, 255, 0.85); 
             padding: 2.5rem; 
             border-radius: 2rem; 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
@@ -87,8 +87,73 @@
 
         /* 主页头部文字在深色背景上的样式 */
         .text-header-light {
-            color: #fff; /* 纯白色 */
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* 增加文字阴影，保证可读性 */
+            color: #fff; 
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); 
+        }
+        
+        /* 照片墙图片定制样式 */
+        .photo-circle-container {
+            width: 100%;
+            /* 确保图片是圆形且正方形 */
+            padding-top: 100%; 
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .photo-circle-container:hover {
+            transform: scale(1.05); /* 悬停微动 */
+        }
+        .photo-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%; /* 圆形 */
+            object-fit: cover; /* 裁剪适应 */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        /* 放大模态框样式 */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 100; 
+            padding-top: 50px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.9); 
+            transition: opacity 0.3s;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+            animation: zoom 0.3s;
+        }
+        @keyframes zoom {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -99,13 +164,13 @@
             <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">🔑 输入我们的回忆 🔑</h1>
             
             <div class="mb-4">
-                <label for="username" class="block text-sm font-medium text-gray-600">账户：我们的纪念日 (YYYYMMDD)</label>
+                <label for="username" class="block text-sm font-medium text-gray-600">账户：我们的相识日 (YYYYMMDD)</label>
                 <input type="text" id="username" class="mt-1 p-3 w-full border border-gray-300 rounded-xl focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="">
             </div>
 
             <div class="mb-6">
-                <label for="password" class="block text-sm font-medium text-gray-600">密码：你的专属数字</label>
-                 <input type="password" id="password" class="mt-1 p-3 w-full border border-gray-300 rounded-xl focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="">
+                <label for="password" class="block text-sm font-medium text-gray-600">密码：我们在一起的日子 (YYYYMMDD)</label>
+                <input type="password" id="password" class="mt-1 p-3 w-full border border-gray-300 rounded-xl focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="">
             </div>
 
             <button id="login-btn" class="w-full bg-pink-600 text-white p-3 rounded-xl font-semibold hover:bg-pink-700 transition duration-300 transform active:scale-95">
@@ -116,9 +181,23 @@
 
     <div id="main-content" class="min-h-screen pt-12 pb-20 px-4 sm:px-8 lg:px-16 hidden opacity-0 transition-opacity duration-1000 full-screen-bg">
         <div class="image-blur-layer"></div> <header class="text-center mb-16 scroll-reveal-item relative z-10">
-            <h1 class="text-6xl font-extrabold text-header-light mb-4">一周年快乐，我的宝贝！</h1> 
+            <h1 class="text-6xl font-extrabold text-header-light mb-4">
+                <span style="color: #ff69b4;">I love you,</span> 
+                <span style="color: #ffd700;">箐！</span>
+            </h1> 
             <p class="text-2xl text-header-light">我们在一起的时光，每一秒都值得珍藏。</p>
-            <div id="timer" class="mt-4 text-5xl font-mono text-pink-300 text-shadow-lg">...</div> 
+            
+            <div class="flex justify-center flex-wrap gap-4 mt-6">
+                <div class="p-4 rounded-xl glass-card text-center relative z-10" style="background-color: rgba(255, 255, 255, 0.3);">
+                    <p class="text-sm font-semibold text-gray-700">相识了</p>
+                    <div id="timer-met" class="text-3xl font-mono text-orange-500" style="color: #ff8c00;">...</div>
+                </div>
+
+                <div class="p-4 rounded-xl glass-card text-center relative z-10" style="background-color: rgba(255, 255, 255, 0.3);">
+                    <p class="text-sm font-semibold text-gray-700">在一起</p>
+                    <div id="timer-love" class="text-3xl font-mono text-orange-500" style="color: #ff8c00;">...</div>
+                </div>
+            </div>
         </header>
 
         <section class="max-w-6xl mx-auto scroll-reveal-item relative z-10">
@@ -126,24 +205,32 @@
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 
-                <div class="col-span-2 row-span-2 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
-                    <img src="https://via.placeholder.com/800x600?text=Photo+1" alt="我们的第一次约会" class="w-full h-full object-cover">
+                <div class="col-span-2 row-span-2">
+                    <div class="photo-circle-container" onclick="openModal('love moment.jpg', '表白瞬间')">
+                        <img src="love moment.jpg" alt="表白瞬间" class="photo-circle">
+                    </div>
                 </div>
 
-                <div class="col-span-2 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
-                    <img src="https://via.placeholder.com/600x400?text=Photo+2" alt="旅行纪念" class="w-full h-full object-cover">
+                <div class="col-span-2">
+                    <div class="photo-circle-container" onclick="openModal('new year girl.jpg', '新年祝福-你')">
+                        <img src="new year girl.jpg" alt="新年祝福-你" class="photo-circle">
+                    </div>
                 </div>
 
                 <div class="col-span-2 bg-pink-500 text-white p-6 rounded-3xl shadow-xl flex items-center justify-center text-center hover:shadow-2xl transition duration-500">
                     <p class="text-xl font-medium">“自从遇见你，我的世界有了色彩。”</p>
                 </div>
 
-                <div class="col-span-1 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
-                    <img src="https://via.placeholder.com/300x300?text=Photo+3" alt="我们的宠物" class="w-full h-full object-cover">
+                <div class="col-span-1">
+                    <div class="photo-circle-container" onclick="openModal('new year boy.jpg', '新年祝福-我')">
+                        <img src="new year boy.jpg" alt="新年祝福-我" class="photo-circle">
+                    </div>
                 </div>
                 
-                <div class="col-span-1 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition duration-500 transform hover:scale-[1.02]">
-                    <img src="https://via.placeholder.com/300x300?text=Photo+4" alt="电影票根" class="w-full h-full object-cover">
+                <div class="col-span-1">
+                    <div class="photo-circle-container" onclick="openModal('love2.jpg', '甜蜜合影')">
+                        <img src="love2.jpg" alt="甜蜜合影" class="photo-circle">
+                    </div>
                 </div>
                 
                 </div>
@@ -160,6 +247,12 @@
             </p>
         </footer>
     </div>
+    
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption" class="text-center text-white text-lg mt-4"></div>
+    </div>
 
 
     <script>
@@ -167,10 +260,12 @@
         /* JavaScript 逻辑部分开始 */
         /* ========================================================= */
         
-        // --- 你的秘密数字 ---
-        const CORRECT_USERNAME = "20240614"; // 你们的纪念日
-        const CORRECT_PASSWORD = "20250125";      // 你们的特殊数字
-        const ANNIVERSARY_DATE = new Date("2024-06-14T00:00:00").getTime(); // 纪念日开始时间 (用于计时器)
+        // --- 你的秘密数字和日期 (已更新) ---
+        const DATE_MET = new Date("2024-06-14T00:00:00").getTime(); // 相识日期
+        const DATE_LOVE = new Date("2025-01-25T00:00:00").getTime(); // 在一起日期
+
+        const CORRECT_USERNAME = "20240614"; // 账户：相识日
+        const CORRECT_PASSWORD = "20250125"; // 密码：在一起的日子
         // -----------------------
 
         const loginBtn = document.getElementById('login-btn');
@@ -179,26 +274,42 @@
         const loginCard = document.getElementById('login-card');
         const loginContainer = document.getElementById('login-container');
         const mainContent = document.getElementById('main-content');
-        const timerElement = document.getElementById('timer');
+        
+        const timerMetElement = document.getElementById('timer-met'); // 相识计时器
+        const timerLoveElement = document.getElementById('timer-love'); // 在一起计时器
 
-        // 计时器函数
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = now - ANNIVERSARY_DATE;
-
-            if (distance < 0) {
-                const days = Math.ceil(Math.abs(distance) / (1000 * 60 * 60 * 24));
-                timerElement.innerHTML = `距离我们的周年纪念日还有 ${days} 天!`;
-                return;
-            }
-
-            // 正计时
+        // 计时器核心函数
+        function formatTimer(distance) {
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            return `${days} 天 ${hours.toString().padStart(2, '0')} 小时 ${minutes.toString().padStart(2, '0')} 分钟 ${seconds.toString().padStart(2, '0')} 秒`;
+        }
 
-            timerElement.innerHTML = `${days} 天 ${hours.toString().padStart(2, '0')} 小时 ${minutes.toString().padStart(2, '0')} 分钟 ${seconds.toString().padStart(2, '0')} 秒`;
+        // 双计时器更新函数
+        function updateTimers() {
+            const now = new Date().getTime();
+            
+            // 计时器 1: 相识
+            const distanceMet = now - DATE_MET;
+            if (distanceMet > 0) {
+                timerMetElement.innerHTML = formatTimer(distanceMet);
+            } else {
+                // 如果还没到相识日，显示倒计时（不太可能，但保险起见）
+                timerMetElement.innerHTML = `${Math.ceil(Math.abs(distanceMet) / (1000 * 60 * 60 * 24))} 天后相识`;
+            }
+
+            // 计时器 2: 在一起
+            const distanceLove = now - DATE_LOVE;
+            if (distanceLove > 0) {
+                timerLoveElement.innerHTML = formatTimer(distanceLove);
+            } else {
+                // 如果还没到在一起的日子，显示倒计时
+                const days = Math.ceil(Math.abs(distanceLove) / (1000 * 60 * 60 * 24));
+                timerLoveElement.innerHTML = `距离在一起的日子还有 ${days} 天!`;
+            }
         }
         
         // 滚动动画初始化函数
@@ -214,16 +325,6 @@
                 easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
                 interval: 0 
             });
-            
-            // 照片墙的动画配置
-            ScrollReveal().reveal('.grid > div', {
-                delay: 200,
-                distance: '15px',
-                origin: 'bottom',
-                duration: 600,
-                easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
-                interval: 120 
-            });
         }
 
         // 登录验证函数
@@ -233,21 +334,19 @@
 
             if (enteredUsername === CORRECT_USERNAME && enteredPassword === CORRECT_PASSWORD) {
                 // 登录成功
-                
-                // 2. 播放解锁动画 (上滑淡出)
                 loginCard.classList.add('opacity-0', '-translate-y-20'); 
                 
                 setTimeout(() => {
-                    // 3. 隐藏登录页，显示主内容页
+                    // 隐藏登录页，显示主内容页
                     loginContainer.classList.add('hidden');
                     mainContent.classList.remove('hidden');
                     
-                    // 4. 主内容页平滑淡入
+                    // 主内容页平滑淡入
                     setTimeout(() => {
                         mainContent.classList.remove('opacity-0');
                         // 启动计时器
-                        updateTimer();
-                        setInterval(updateTimer, 1000);
+                        updateTimers();
+                        setInterval(updateTimers, 1000);
                         // 初始化滚动动画
                         initScrollReveal();
                     }, 50); 
@@ -264,15 +363,30 @@
             }
         }
 
-        // 绑定事件监听器：始终显示登录页，等待用户输入
+        // 图片放大模态框函数
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const captionText = document.getElementById("caption");
+
+        function openModal(src, caption) {
+            modal.style.display = "block";
+            modalImg.src = src;
+            captionText.innerHTML = caption;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // 绑定事件监听器
         loginBtn.addEventListener('click', handleLogin);
         passwordInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 handleLogin();
             }
         });
-        
+
     </script>
 </body>
-
 </html>
+
