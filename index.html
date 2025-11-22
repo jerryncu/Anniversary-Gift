@@ -39,7 +39,7 @@
             background-image: url('background.jpg');
         }
 
-        /* 背景图片模糊层（应用在每个内容容器的内部） */
+        /* 背景图片模糊层 */
         .image-blur-layer {
             position: absolute;
             top: 0;
@@ -94,7 +94,6 @@
         /* 照片墙图片定制样式 */
         .photo-circle-container {
             width: 100%;
-            /* 确保图片是圆形且正方形 */
             padding-top: 100%; 
             position: relative;
             cursor: pointer;
@@ -110,16 +109,29 @@
             width: 100%;
             height: 100%;
             border-radius: 50%; /* 圆形 */
-            object-fit: cover; /* 裁剪适应 */
+            object-fit: cover; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
+        }
+
+        /* 图片切换的平滑淡入动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .photo-item {
+            display: none; /* 默认隐藏，通过 JS 控制显示 */
+            animation: fadeIn 0.4s ease-out; /* 应用平滑动画 */
+        }
+        .photo-item.active {
+            display: block;
         }
 
         /* 放大模态框样式 */
         .modal {
             display: none; 
             position: fixed; 
-            z-index: 100; 
+            z-index: 1000; /* 确保在最上层 */
             padding-top: 50px; 
             left: 0;
             top: 0;
@@ -127,7 +139,6 @@
             height: 100%; 
             overflow: auto; 
             background-color: rgba(0,0,0,0.9); 
-            transition: opacity 0.3s;
         }
         .modal-content {
             margin: auto;
@@ -137,8 +148,8 @@
             animation: zoom 0.3s;
         }
         @keyframes zoom {
-            from {transform:scale(0)} 
-            to {transform:scale(1)}
+            from {transform:scale(0.5); opacity: 0;} 
+            to {transform:scale(1); opacity: 1;}
         }
         .modal-close {
             position: absolute;
@@ -160,7 +171,8 @@
 <body>
 
     <div id="login-container" class="h-screen flex items-center justify-center transition-opacity duration-1000 full-screen-bg">
-        <div class="image-blur-layer"></div> <div id="login-card" class="glass-card p-8 w-full max-w-sm rounded-3xl shadow-2xl transition-all duration-700 ease-in-out">
+        <div class="image-blur-layer"></div>
+        <div id="login-card" class="glass-card p-8 w-full max-w-sm rounded-3xl shadow-2xl transition-all duration-700 ease-in-out">
             <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">🔑 输入我们的回忆 🔑</h1>
             
             <div class="mb-4">
@@ -180,7 +192,9 @@
     </div>
 
     <div id="main-content" class="min-h-screen pt-12 pb-20 px-4 sm:px-8 lg:px-16 hidden opacity-0 transition-opacity duration-1000 full-screen-bg">
-        <div class="image-blur-layer"></div> <header class="text-center mb-16 scroll-reveal-item relative z-10">
+        <div class="image-blur-layer"></div>
+
+        <header class="text-center mb-12 scroll-reveal-item relative z-10">
             <h1 class="text-6xl font-extrabold text-header-light mb-4">
                 <span style="color: #ff69b4;">I love you,</span> 
                 <span style="color: #ffd700;">箐！</span>
@@ -203,37 +217,107 @@
         <section class="max-w-6xl mx-auto scroll-reveal-item relative z-10">
             <h2 class="text-4xl font-bold text-gray-800 mb-8">📸 我们的记忆碎片 📸</h2>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="flex flex-wrap justify-center space-x-2 sm:space-x-4 mb-8">
+                <button id="btn-all" onclick="filterPhotos('all')" class="py-2 px-3 sm:px-4 rounded-full bg-pink-500 text-white font-semibold transition duration-300 mb-2">全部</button>
+                <button id="btn-encounter" onclick="filterPhotos('encounter')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">初识</button>
+                <button id="btn-newyear" onclick="filterPhotos('newyear')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">新年</button>
+                <button id="btn-confession" onclick="filterPhotos('confession')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">表白</button>
+                <button id="btn-lovemoment" onclick="filterPhotos('lovemoment')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">Love Moment</button>
+                <button id="btn-beauty" onclick="filterPhotos('beauty')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">美照</button>
+            </div>
+            
+            <div id="photo-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 
-                <div class="col-span-2 row-span-2">
-                    <div class="photo-circle-container" onclick="openModal('love moment.jpg', '表白瞬间')">
-                        <img src="love moment.jpg" alt="表白瞬间" class="photo-circle">
+                <div class="col-span-2 row-span-2 photo-item encounter hidden">
+                    <div class="photo-circle-container" onclick="openModal('encounter.jpg', '初识的纪念')">
+                        <img src="encounter.jpg" alt="初识的纪念" class="photo-circle">
                     </div>
                 </div>
 
-                <div class="col-span-2">
+                <div class="col-span-2 photo-item newyear hidden">
+                    <div class="photo-circle-container" onclick="openModal('landscape.jpg', '新年风景')">
+                        <img src="landscape.jpg" alt="新年风景" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-1 photo-item newyear hidden">
+                    <div class="photo-circle-container" onclick="openModal('new year boy.jpg', '新年祝福-我')">
+                        <img src="new year boy.jpg" alt="新年祝福-我" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-1 photo-item newyear hidden">
                     <div class="photo-circle-container" onclick="openModal('new year girl.jpg', '新年祝福-你')">
                         <img src="new year girl.jpg" alt="新年祝福-你" class="photo-circle">
                     </div>
                 </div>
 
-                <div class="col-span-2 bg-pink-500 text-white p-6 rounded-3xl shadow-xl flex items-center justify-center text-center hover:shadow-2xl transition duration-500">
-                    <p class="text-xl font-medium">“自从遇见你，我的世界有了色彩。”</p>
+                <div class="col-span-2 photo-item confession hidden">
+                    <div class="photo-circle-container" onclick="openModal('love moment.jpg', '表白瞬间')">
+                        <img src="love moment.jpg" alt="表白瞬间" class="photo-circle">
+                    </div>
+                </div>
+                
+                <div class="col-span-2 photo-item lovemoment hidden">
+                    <div class="photo-circle-container" onclick="openModal('Cat girl.jpg', '可爱猫咪')">
+                        <img src="Cat girl.jpg" alt="可爱猫咪" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-2 photo-item lovemoment hidden">
+                    <div class="photo-circle-container" onclick="openModal('Dog boy.jpg', '帅气狗狗')">
+                        <img src="Dog boy.jpg" alt="帅气狗狗" class="photo-circle">
+                    </div>
                 </div>
 
-                <div class="col-span-1">
-                    <div class="photo-circle-container" onclick="openModal('new year boy.jpg', '新年祝福-我')">
-                        <img src="new year boy.jpg" alt="新年祝福-我" class="photo-circle">
+                <div class="col-span-2 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('cute girl.jpg', '可爱合影')">
+                        <img src="cute girl.jpg" alt="可爱合影" class="photo-circle">
                     </div>
                 </div>
-                
-                <div class="col-span-1">
-                    <div class="photo-circle-container" onclick="openModal('love2.jpg', '甜蜜合影')">
-                        <img src="love2.jpg" alt="甜蜜合影" class="photo-circle">
+                <div class="col-span-1 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('love2.jpg', '甜蜜时刻 2')">
+                        <img src="love2.jpg" alt="甜蜜时刻 2" class="photo-circle">
                     </div>
                 </div>
-                
+                <div class="col-span-1 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('love3.jpg', '甜蜜时刻 3')">
+                        <img src="love3.jpg" alt="甜蜜时刻 3" class="photo-circle">
+                    </div>
                 </div>
+                <div class="col-span-1 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('love5.jpg', '甜蜜时刻 5')">
+                        <img src="love5.jpg" alt="甜蜜时刻 5" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-1 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('love7.jpg', '甜蜜时刻 7')">
+                        <img src="love7.jpg" alt="甜蜜时刻 7" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-2 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('sexy girl.jpg', '性感动人')">
+                        <img src="sexy girl.jpg" alt="性感动人" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-1 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('xiaojiojio.jpg', '小脚脚')">
+                        <img src="xiaojiojio.jpg" alt="小脚脚" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-1 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('大波浪.jpg', '大波浪发型')">
+                        <img src="大波浪.jpg" alt="大波浪发型" class="photo-circle">
+                    </div>
+                </div>
+                <div class="col-span-2 photo-item beauty hidden">
+                    <div class="photo-circle-container" onclick="openModal('小村姑.jpg', '小村姑')">
+                        <img src="小村姑.jpg" alt="小村姑" class="photo-circle">
+                    </div>
+                </div>
+
+                <div class="col-span-4 bg-pink-500 text-white p-6 rounded-3xl shadow-xl flex items-center justify-center text-center hover:shadow-2xl transition duration-500">
+                    <p class="text-xl font-medium">“自从遇见你，我的世界有了色彩。”</p>
+                </div>
+                
+            </div>
         </section>
 
         <footer class="max-w-4xl mx-auto scroll-reveal-item relative z-10">
@@ -260,7 +344,7 @@
         /* JavaScript 逻辑部分开始 */
         /* ========================================================= */
         
-        // --- 你的秘密数字和日期 (已更新) ---
+        // --- 你的秘密数字和日期 ---
         const DATE_MET = new Date("2024-06-14T00:00:00").getTime(); // 相识日期
         const DATE_LOVE = new Date("2025-01-25T00:00:00").getTime(); // 在一起日期
 
@@ -297,7 +381,6 @@
             if (distanceMet > 0) {
                 timerMetElement.innerHTML = formatTimer(distanceMet);
             } else {
-                // 如果还没到相识日，显示倒计时（不太可能，但保险起见）
                 timerMetElement.innerHTML = `${Math.ceil(Math.abs(distanceMet) / (1000 * 60 * 60 * 24))} 天后相识`;
             }
 
@@ -306,7 +389,6 @@
             if (distanceLove > 0) {
                 timerLoveElement.innerHTML = formatTimer(distanceLove);
             } else {
-                // 如果还没到在一起的日子，显示倒计时
                 const days = Math.ceil(Math.abs(distanceLove) / (1000 * 60 * 60 * 24));
                 timerLoveElement.innerHTML = `距离在一起的日子还有 ${days} 天!`;
             }
@@ -316,7 +398,6 @@
         function initScrollReveal() {
             if (typeof ScrollReveal === 'undefined') return;
 
-            // 头部、标题、页脚的动画配置
             ScrollReveal().reveal('.scroll-reveal-item', {
                 delay: 200, 
                 distance: '30px', 
@@ -325,7 +406,43 @@
                 easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
                 interval: 0 
             });
+            // 确保图片网格初始内容显示
+            filterPhotos('all');
         }
+
+        // --- 图片切换/过滤函数 ---
+        function filterPhotos(category) {
+            const items = document.querySelectorAll('.photo-item');
+            const buttons = document.querySelectorAll('#photo-grid + div button');
+            
+            // 按钮高亮逻辑
+            buttons.forEach(btn => {
+                if (btn.id === `btn-${category}` || (category === 'all' && btn.id === 'btn-all')) {
+                    btn.classList.remove('bg-gray-200', 'text-gray-800');
+                    btn.classList.add('bg-pink-500', 'text-white');
+                } else {
+                    btn.classList.remove('bg-pink-500', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-800');
+                }
+            });
+
+            // 图片显示/隐藏逻辑
+            items.forEach(item => {
+                item.classList.remove('active'); // 移除激活类
+                item.style.display = 'none';    // 隐藏所有
+            });
+
+            // 使用 setTimeout 延迟显示，以便重置动画
+            setTimeout(() => {
+                items.forEach(item => {
+                    if (category === 'all' || item.classList.contains(category)) {
+                        item.style.display = 'block';
+                        item.classList.add('active'); // 添加激活类触发 fadeIn 动画
+                    }
+                });
+            }, 10); // 短暂延迟确保动画能正确触发
+        }
+
 
         // 登录验证函数
         function handleLogin() {
@@ -337,18 +454,15 @@
                 loginCard.classList.add('opacity-0', '-translate-y-20'); 
                 
                 setTimeout(() => {
-                    // 隐藏登录页，显示主内容页
                     loginContainer.classList.add('hidden');
                     mainContent.classList.remove('hidden');
                     
-                    // 主内容页平滑淡入
                     setTimeout(() => {
                         mainContent.classList.remove('opacity-0');
-                        // 启动计时器
                         updateTimers();
                         setInterval(updateTimers, 1000);
-                        // 初始化滚动动画
                         initScrollReveal();
+                        filterPhotos('all'); // 默认显示全部照片
                     }, 50); 
                     
                 }, 700); 
@@ -377,6 +491,13 @@
         function closeModal() {
             modal.style.display = "none";
         }
+        
+        // 监听 ESC 键关闭模态框
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
 
         // 绑定事件监听器
         loginBtn.addEventListener('click', handleLogin);
@@ -385,8 +506,7 @@
                 handleLogin();
             }
         });
-
+        
     </script>
 </body>
 </html>
-
