@@ -3,104 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️ I love you, 箐！ ❤️</title>
+    <title>❤️ To My Dearest 箐 ❤️</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         /* ========================================================= */
-        /* CSS 样式部分开始 */
+        /* Gemini Next-Gen 视觉升级样式  */
         /* ========================================================= */
         
-        /* 自定义 CSS 确保 Apple 风格字体 */
+        :root {
+            --primary-pink: #ff7eb3;
+            --primary-blue: #8faaff;
+        }
+
         body {
-            font-family: 'PingFang SC', 'Helvetica Neue', 'Roboto', sans-serif;
-            background-color: #F8F8F8; /* 备用背景色 */
-        }
-        
-        /* 通用背景设置样式 */
-        .full-screen-bg {
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            position: relative; 
-            z-index: 1;
+            font-family: 'PingFang SC', 'Noto Serif SC', sans-serif;
+            background-color: #0f172a; /* 深色底色，突出光影 */
+            color: #333;
+            overflow-x: hidden;
         }
 
-        /* 登录页背景图 (使用文件名 cover.jpg) */
-        #login-container {
-            background-image: url('cover.jpg'); 
+        /* 1. 动态极光背景 (替代原本的静态图背景，如果图片加载失败，这个效果会很美) */
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
 
-        /* 主内容页背景图 (使用文件名 background.jpg) */
-        #main-content {
-            background-image: url('background.jpg');
-        }
-
-        /* 背景图片模糊层 */
-        .image-blur-layer {
-            position: absolute;
+        /* 如果你想保留原本的背景图，这个层会叠加在上面增加质感 */
+        .bg-overlay-image {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.45); 
-            backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 0; 
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4; /* 让背景图若隐若现，与极光融合 */
+            mix-blend-mode: overlay;
         }
 
-        /* 登录卡片的毛玻璃背景效果 */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 2. 高级毛玻璃卡片 */
         .glass-card {
-            background-color: rgba(255, 255, 255, 0.5); 
-            backdrop-filter: blur(30px); 
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.15);
-            z-index: 10;
-            position: relative; 
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            border-radius: 24px;
+            transition: all 0.3s ease;
         }
         
-        /* 登录失败的“摇头”动画 */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+        /* 登录卡片专用：3D透视容器 */
+        .perspective-container {
+            perspective: 1000px;
         }
-        .shake {
-            animation: shake 0.5s;
-        }
-
-        /* 主内容区卡片背景 */
-        #main-content section,
-        #main-content footer {
-            background-color: rgba(255, 255, 255, 0.85); 
-            padding: 2.5rem; 
-            border-radius: 2rem; 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
-            margin-bottom: 2rem; 
-            position: relative; 
-            z-index: 10;
-        }
-
-        /* 主页头部文字在深色背景上的样式 */
-        .text-header-light {
-            color: #fff; 
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); 
+        .login-glass {
+            background: rgba(255, 255, 255, 0.75);
+            transform-style: preserve-3d; /* 开启3D子元素 */
         }
         
-        /* 照片墙图片定制样式 */
+        /* 登录框内的元素悬浮感 */
+        .login-content {
+            transform: translateZ(30px);
+        }
+
+        /* 3. 照片墙微交互 */
         .photo-circle-container {
-            width: 100%;
-            padding-top: 100%; 
             position: relative;
+            padding-top: 100%;
             cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .photo-circle-container:hover {
-            transform: scale(1.05); /* 悬停微动 */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .photo-circle {
             position: absolute;
@@ -108,424 +97,418 @@
             left: 0;
             width: 100%;
             height: 100%;
-            border-radius: 50%; /* 圆形 */
-            object-fit: cover; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+        }
+        .photo-circle-container:hover {
+            transform: scale(1.1) rotate(3deg);
+            z-index: 10;
+        }
+        .photo-circle-container:hover .photo-circle {
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.4); /* 粉色光晕 */
+            border-color: #fff;
         }
 
-        /* 图片切换的平滑淡入动画 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        /* 4. 打字机光标效果 */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #ec4899;
         }
-        .photo-item {
-            display: none; /* 默认隐藏，通过 JS 控制显示 */
-            animation: fadeIn 0.4s ease-out; /* 应用平滑动画 */
-        }
-        .photo-item.active {
-            display: block;
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
-        /* 放大模态框样式 */
+        /* 动画关键帧 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .shake { animation: shake 0.5s; }
+
+        /* 模态框优化 */
         .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; /* 确保在最上层 */
-            padding-top: 50px; 
+            display: none;
+            position: fixed;
+            z-index: 2000;
             left: 0;
             top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0,0,0,0.9); 
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
         }
         .modal-content {
             margin: auto;
             display: block;
-            width: 80%;
-            max-width: 800px;
-            animation: zoom 0.3s;
+            width: auto;
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(255,255,255,0.2);
+            animation: zoom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         @keyframes zoom {
-            from {transform:scale(0.5); opacity: 0;} 
+            from {transform:scale(0.8); opacity: 0;} 
             to {transform:scale(1); opacity: 1;}
         }
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .modal-close:hover,
-        .modal-close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
+        
+        /* 字体美化 */
+        .font-handwriting {
+            font-family: 'Dancing Script', cursive;
         }
     </style>
 </head>
 <body>
 
-    <div id="login-container" class="h-screen flex items-center justify-center transition-opacity duration-1000 full-screen-bg">
-        <div class="image-blur-layer"></div>
-        <div id="login-card" class="glass-card p-8 w-full max-w-sm rounded-3xl shadow-2xl transition-all duration-700 ease-in-out">
-            <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">🔑 输入我们的回忆 🔑</h1>
-            
-            <div class="mb-4">
-                <label for="username" class="block text-sm font-medium text-gray-600">账户：我们的相识日 (YYYYMMDD)</label>
-                <input type="text" id="username" class="mt-1 p-3 w-full border border-gray-300 rounded-xl focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="">
-            </div>
+    <div class="aurora-bg"></div>
+    <div class="bg-overlay-image" style="background-image: url('cover.jpg');" id="bg-layer"></div>
 
-            <div class="mb-6">
-                <label for="password" class="block text-sm font-medium text-gray-600">密码：我们在一起的日子 (YYYYMMDD)</label>
-                <input type="password" id="password" class="mt-1 p-3 w-full border border-gray-300 rounded-xl focus:ring-pink-500 focus:border-pink-500 transition duration-300" placeholder="">
-            </div>
+    <div id="login-container" class="h-screen w-full flex items-center justify-center transition-all duration-1000 perspective-container">
+        
+        <div id="tilt-card" class="login-glass glass-card p-10 w-full max-w-sm shadow-2xl transition-transform duration-100 ease-out relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-400 rounded-full blur-3xl opacity-40"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400 rounded-full blur-3xl opacity-40"></div>
 
-            <button id="login-btn" class="w-full bg-pink-600 text-white p-3 rounded-xl font-semibold hover:bg-pink-700 transition duration-300 transform active:scale-95">
-                解锁爱意 ❤️
-            </button>
+            <div class="login-content relative z-10">
+                <h1 class="text-4xl font-bold text-gray-800 text-center mb-2 font-handwriting" style="color: #d946ef;">Our Memory</h1>
+                <p class="text-center text-gray-500 mb-8 text-xs tracking-widest">ENTER THE SECRET KEY</p>
+                
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">相识日 (Account)</label>
+                    <input type="text" id="username" class="w-full px-4 py-3 rounded-lg bg-white/50 border border-white/60 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white/80 transition shadow-inner text-gray-700 placeholder-gray-400" placeholder="YYYYMMDD">
+                </div>
+
+                <div class="mb-8">
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">在一起 (Password)</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 rounded-lg bg-white/50 border border-white/60 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:bg-white/80 transition shadow-inner text-gray-700 placeholder-gray-400" placeholder="YYYYMMDD">
+                </div>
+
+                <button id="login-btn" class="w-full bg-gradient-to-r from-pink-500 to-rose-600 text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-pink-500/30 hover:scale-[1.02] active:scale-95 transition-all duration-300">
+                    Unlock Love ❤️
+                </button>
+            </div>
         </div>
     </div>
 
-    <div id="main-content" class="min-h-screen pt-12 pb-20 px-4 sm:px-8 lg:px-16 hidden opacity-0 transition-opacity duration-1000 full-screen-bg">
-        <div class="image-blur-layer"></div>
-
-        <header class="text-center mb-12 scroll-reveal-item relative z-10">
-            <h1 class="text-6xl font-extrabold text-header-light mb-4">
-                <span style="color: #ff69b4;">I love you,</span> 
-                <span style="color: #ffd700;">箐！</span>
+    <div id="main-content" class="min-h-screen pt-12 pb-20 px-4 sm:px-8 lg:px-16 hidden opacity-0 transition-opacity duration-1000">
+        
+        <header class="text-center mb-16 scroll-reveal-item relative z-10">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white drop-shadow-lg mb-4 floating">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-pink-500 font-handwriting">I love you, </span> 
+                <span class="text-white">箐</span>
             </h1> 
-            <p class="text-2xl text-header-light">我们在一起的时光，每一秒都值得珍藏。</p>
+            <p class="text-xl text-white/90 font-light tracking-wider">Each moment with you is a treasure.</p>
             
-            <div class="flex justify-center flex-wrap gap-4 mt-6">
-                <div class="p-4 rounded-xl glass-card text-center relative z-10" style="background-color: rgba(255, 255, 255, 0.3);">
-                    <p class="text-sm font-semibold text-gray-700">相识了</p>
-                    <div id="timer-met" class="text-3xl font-mono text-orange-500" style="color: #ff8c00;">...</div>
+            <div class="flex justify-center flex-wrap gap-6 mt-10">
+                <div class="px-6 py-4 rounded-2xl glass-card text-center relative transform hover:-translate-y-2 transition-transform duration-300">
+                    <p class="text-xs font-bold text-gray-500 uppercase mb-1">We Met</p>
+                    <div id="timer-met" class="text-2xl md:text-3xl font-mono font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">Loading...</div>
                 </div>
 
-                <div class="p-4 rounded-xl glass-card text-center relative z-10" style="background-color: rgba(255, 255, 255, 0.3);">
-                    <p class="text-sm font-semibold text-gray-700">在一起</p>
-                    <div id="timer-love" class="text-3xl font-mono text-orange-500" style="color: #ff8c00;">...</div>
+                <div class="px-6 py-4 rounded-2xl glass-card text-center relative transform hover:-translate-y-2 transition-transform duration-300">
+                    <p class="text-xs font-bold text-gray-500 uppercase mb-1">In Love</p>
+                    <div id="timer-love" class="text-2xl md:text-3xl font-mono font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-pink-400">Loading...</div>
                 </div>
             </div>
         </header>
 
-        <section class="max-w-6xl mx-auto scroll-reveal-item relative z-10">
-            <h2 class="text-4xl font-bold text-gray-800 mb-8">📸 我们的记忆碎片 📸</h2>
-            
-            <div class="flex flex-wrap justify-center space-x-2 sm:space-x-4 mb-8">
-                <button id="btn-all" onclick="filterPhotos('all')" class="py-2 px-3 sm:px-4 rounded-full bg-pink-500 text-white font-semibold transition duration-300 mb-2">全部</button>
-                <button id="btn-encounter" onclick="filterPhotos('encounter')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">初识</button>
-                <button id="btn-newyear" onclick="filterPhotos('newyear')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">新年</button>
-                <button id="btn-confession" onclick="filterPhotos('confession')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">表白</button>
-                <button id="btn-lovemoment" onclick="filterPhotos('lovemoment')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">Love Moment</button>
-                <button id="btn-beauty" onclick="filterPhotos('beauty')" class="py-2 px-3 sm:px-4 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 mb-2">美照</button>
+        <section class="max-w-6xl mx-auto scroll-reveal-item relative z-10 mb-20 glass-card p-6 md:p-10">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 flex items-center">
+                    <span class="text-3xl mr-2">📸</span> 
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">Memory Lane</span>
+                </h2>
             </div>
             
-            <div id="photo-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                
-                <div class="col-span-2 row-span-2 photo-item encounter hidden">
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <button onclick="filterPhotos('all')" class="filter-btn py-2 px-5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm bg-pink-500 text-white">全部</button>
+                <button onclick="filterPhotos('encounter')" class="filter-btn py-2 px-5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm bg-white text-gray-600 hover:bg-gray-100">初识</button>
+                <button onclick="filterPhotos('newyear')" class="filter-btn py-2 px-5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm bg-white text-gray-600 hover:bg-gray-100">新年</button>
+                <button onclick="filterPhotos('confession')" class="filter-btn py-2 px-5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm bg-white text-gray-600 hover:bg-gray-100">表白</button>
+                <button onclick="filterPhotos('lovemoment')" class="filter-btn py-2 px-5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm bg-white text-gray-600 hover:bg-gray-100">甜蜜</button>
+                <button onclick="filterPhotos('beauty')" class="filter-btn py-2 px-5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm bg-white text-gray-600 hover:bg-gray-100">美照</button>
+            </div>
+            
+            <div id="photo-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="col-span-2 row-span-2 photo-item encounter">
                     <div class="photo-circle-container" onclick="openModal('encounter.jpg', '初识的纪念')">
                         <img src="encounter.jpg" alt="初识的纪念" class="photo-circle">
                     </div>
                 </div>
 
-                <div class="col-span-2 photo-item newyear hidden">
+                <div class="col-span-2 photo-item newyear">
                     <div class="photo-circle-container" onclick="openModal('landscape.jpg', '新年风景')">
                         <img src="landscape.jpg" alt="新年风景" class="photo-circle">
                     </div>
                 </div>
-                <div class="col-span-1 photo-item newyear hidden">
+                <div class="col-span-1 photo-item newyear">
                     <div class="photo-circle-container" onclick="openModal('new year boy.jpg', '新年祝福-我')">
-                        <img src="new year boy.jpg" alt="新年祝福-我" class="photo-circle">
+                         <img src="new year boy.jpg" class="photo-circle">
                     </div>
                 </div>
-                <div class="col-span-1 photo-item newyear hidden">
-                    <div class="photo-circle-container" onclick="openModal('new year girl.jpg', '新年祝福-你')">
-                        <img src="new year girl.jpg" alt="新年祝福-你" class="photo-circle">
-                    </div>
-                </div>
-
-                <div class="col-span-2 photo-item confession hidden">
-                    <div class="photo-circle-container" onclick="openModal('love moment.jpg', '表白瞬间')">
-                        <img src="love moment.jpg" alt="表白瞬间" class="photo-circle">
-                    </div>
-                </div>
-                
-                <div class="col-span-2 photo-item lovemoment hidden">
-                    <div class="photo-circle-container" onclick="openModal('Cat girl.jpg', '可爱猫咪')">
-                        <img src="Cat girl.jpg" alt="可爱猫咪" class="photo-circle">
-                    </div>
-                </div>
-                <div class="col-span-2 photo-item lovemoment hidden">
-                    <div class="photo-circle-container" onclick="openModal('Dog boy.jpg', '帅气狗狗')">
-                        <img src="Dog boy.jpg" alt="帅气狗狗" class="photo-circle">
-                    </div>
-                </div>
-
-                <div class="col-span-2 photo-item beauty hidden">
+                <div class="col-span-1 photo-item beauty">
                     <div class="photo-circle-container" onclick="openModal('cute girl.jpg', '可爱合影')">
-                        <img src="cute girl.jpg" alt="可爱合影" class="photo-circle">
+                         <img src="cute girl.jpg" class="photo-circle">
                     </div>
                 </div>
-                <div class="col-span-1 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('love2.jpg', '甜蜜时刻 2')">
-                        <img src="love2.jpg" alt="甜蜜时刻 2" class="photo-circle">
+                <div class="col-span-2 photo-item lovemoment">
+                    <div class="photo-circle-container" onclick="openModal('love moment.jpg', '表白瞬间')">
+                        <img src="love moment.jpg" class="photo-circle">
                     </div>
-                </div>
-                <div class="col-span-1 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('love3.jpg', '甜蜜时刻 3')">
-                        <img src="love3.jpg" alt="甜蜜时刻 3" class="photo-circle">
-                    </div>
-                </div>
-                <div class="col-span-1 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('love5.jpg', '甜蜜时刻 5')">
-                        <img src="love5.jpg" alt="甜蜜时刻 5" class="photo-circle">
-                    </div>
-                </div>
-                <div class="col-span-1 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('love7.jpg', '甜蜜时刻 7')">
-                        <img src="love7.jpg" alt="甜蜜时刻 7" class="photo-circle">
-                    </div>
-                </div>
-                <div class="col-span-2 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('sexy girl.jpg', '性感动人')">
-                        <img src="sexy girl.jpg" alt="性感动人" class="photo-circle">
-                    </div>
-                </div>
-                <div class="col-span-1 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('xiaojiojio.jpg', '小脚脚')">
-                        <img src="xiaojiojio.jpg" alt="小脚脚" class="photo-circle">
-                    </div>
-                </div>
-                <div class="col-span-1 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('大波浪.jpg', '大波浪发型')">
-                        <img src="大波浪.jpg" alt="大波浪发型" class="photo-circle">
-                    </div>
-                </div>
-                <div class="col-span-2 photo-item beauty hidden">
-                    <div class="photo-circle-container" onclick="openModal('小村姑.jpg', '小村姑')">
-                        <img src="小村姑.jpg" alt="小村姑" class="photo-circle">
-                    </div>
-                </div>
-
-                <div class="col-span-4 bg-pink-500 text-white p-6 rounded-3xl shadow-xl flex items-center justify-center text-center hover:shadow-2xl transition duration-500">
-                    <p class="text-xl font-medium">“自从遇见你，我的世界有了色彩。”</p>
                 </div>
                 
+                <div class="col-span-2 md:col-span-4 bg-gradient-to-r from-pink-500 to-orange-400 text-white p-8 rounded-3xl shadow-lg flex items-center justify-center text-center transform hover:scale-[1.02] transition duration-500 photo-item all">
+                    <div>
+                        <p class="text-2xl font-handwriting mb-2">"You color my world."</p>
+                        <p class="text-sm opacity-80">自从遇见你，我的世界有了色彩。</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <footer class="max-w-4xl mx-auto scroll-reveal-item relative z-10">
-            <h2 class="text-3xl font-bold text-pink-500 mb-4">💌 一封写给你的信 💌</h2>
-            <p class="text-gray-700 text-lg leading-relaxed">
-                亲爱的箐箐：
-                <br><br>
-                此刻，我们已经一起走过了三百多个日子，特别是正式在一起的这段时光（300天/将近10个月）。在这段旅程中，我们互相磨合，彼此包容，偶尔的小小争吵，都成了我们更了解对方、更爱彼此的基石。
-                <br><br>
-                你知道吗，我真的越来越喜欢你这个“小妖精”了！一开始你撒娇，我竟然真的信了你否认的说辞。直到最近，你像一只温柔的小猫咪一样天天黏在我身上，我才发现自己早已彻底陷入你爱的漩涡，无法自拔。
-                <br><br>
-                你拥有那么好的脾气，每当我生气的时候，你总是耐心又温柔地安慰我。而且，你还特别“勾人”！以前，我总觉得自己是个孤独的灵魂，即使身边朋友很多，却找不到一个能心贴心的对象。是你，像那只小猫咪，义无反顾地钻进我的心窝，用你的柔软和温暖治愈我，让我心动不已。
-                <br><br>
-                这三百天的相识，让你的存在成为了我生命中最重要的部分。我的宝宝，我想和你一起，走过无数个久久的未来。
-                <br><br>
-                爱你的
-                <br>
-                瑞
-            </p>
+        <footer class="max-w-4xl mx-auto scroll-reveal-item relative z-10 glass-card p-8 md:p-12 mb-10">
+            <h2 class="text-3xl font-bold text-pink-600 mb-6 text-center font-handwriting">To My Girl</h2>
+            
+            <div id="typewriter-text" class="text-gray-700 text-lg leading-loose font-serif typing-cursor min-h-[300px]">
+                </div>
         </footer>
+        
+        <div class="text-center text-white/40 text-sm pb-8">
+            Created with ❤️ for 箐
+        </div>
     </div>
     
-    <div id="imageModal" class="modal">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <div id="caption" class="text-center text-white text-lg mt-4"></div>
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="absolute top-5 right-8 text-white text-5xl cursor-pointer hover:text-pink-500 transition">&times;</span>
+        <div class="flex h-full items-center justify-center p-4">
+            <div class="text-center">
+                <img class="modal-content" id="modalImage">
+                <div id="caption" class="text-white text-xl mt-4 font-light tracking-wide"></div>
+            </div>
+        </div>
     </div>
+
+    <textarea id="letter-source" class="hidden">
+亲爱的箐箐：
+
+此刻，我们已经一起走过了三百多个日子，特别是正式在一起的这段时光。在这段旅程中，我们互相磨合，彼此包容，偶尔的小小争吵，都成了我们更了解对方、更爱彼此的基石。
+
+你知道吗，我真的越来越喜欢你这个“小妖精”了！一开始你撒娇，我竟然真的信了你否认的说辞。直到最近，你像一只温柔的小猫咪一样天天黏在我身上，我才发现自己早已彻底陷入你爱的漩涡，无法自拔。
+
+你拥有那么好的脾气，每当我生气的时候，你总是耐心又温柔地安慰我。而且，你还特别“勾人”！以前，我总觉得自己是个孤独的灵魂，即使身边朋友很多，却找不到一个能心贴心的对象。是你，像那只小猫咪，义无反顾地钻进我的心窝，用你的柔软和温暖治愈我，让我心动不已。
+
+这三百天的相识，让你的存在成为了我生命中最重要的部分。我的宝宝，我想和你一起，走过无数个久久的未来。
+
+爱你的，
+瑞
+    </textarea>
 
 
     <script>
         /* ========================================================= */
-        /* JavaScript 逻辑部分开始 */
+        /* Logic Core */
         /* ========================================================= */
         
-        // --- 你的秘密数字和日期 ---
-        const DATE_MET = new Date("2024-06-14T00:00:00").getTime(); // 相识日期
-        const DATE_LOVE = new Date("2025-01-25T00:00:00").getTime(); // 在一起日期
+        // 1. 配置信息
+        const CONFIG = {
+            dateMet: "2024-06-14T00:00:00",
+            dateLove: "2025-01-25T00:00:00",
+            correctUser: "20240614",
+            correctPass: "20250125"
+        };
 
-        const CORRECT_USERNAME = "20240614"; // 账户：相识日
-        const CORRECT_PASSWORD = "20250125"; // 密码：在一起的日子
-        // -----------------------
+        // 2. 3D 登录卡片交互逻辑 (New!)
+        const tiltCard = document.getElementById('tilt-card');
+        const loginContainer = document.getElementById('login-container');
 
+        loginContainer.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            tiltCard.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        loginContainer.addEventListener('mouseleave', () => {
+            tiltCard.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+        // 3. 打字机效果逻辑 (New!)
+        let typewriterStarted = false;
+        function startTypewriter() {
+            if (typewriterStarted) return;
+            typewriterStarted = true;
+            
+            const sourceText = document.getElementById('letter-source').value.trim();
+            const target = document.getElementById('typewriter-text');
+            let i = 0;
+            const speed = 50; // 打字速度 (ms)
+
+            function type() {
+                if (i < sourceText.length) {
+                    let char = sourceText.charAt(i);
+                    // 处理换行符
+                    if (char === '\n') {
+                        target.innerHTML += '<br>';
+                    } else {
+                        target.innerHTML += char;
+                    }
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    target.classList.remove('typing-cursor'); // 打字结束移除光标
+                }
+            }
+            type();
+        }
+
+        // 4. 核心登录与初始化逻辑
         const loginBtn = document.getElementById('login-btn');
         const usernameInput = document.getElementById('username');
         const passwordInput = document.getElementById('password');
-        const loginCard = document.getElementById('login-card');
-        const loginContainer = document.getElementById('login-container');
         const mainContent = document.getElementById('main-content');
         
-        const timerMetElement = document.getElementById('timer-met'); // 相识计时器
-        const timerLoveElement = document.getElementById('timer-love'); // 在一起计时器
-
-        // 计时器核心函数
-        function formatTimer(distance) {
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            return `${days} 天 ${hours.toString().padStart(2, '0')} 小时 ${minutes.toString().padStart(2, '0')} 分钟 ${seconds.toString().padStart(2, '0')} 秒`;
-        }
-
-        // 双计时器更新函数
-        function updateTimers() {
-            const now = new Date().getTime();
-            
-            // 计时器 1: 相识
-            const distanceMet = now - DATE_MET;
-            if (distanceMet > 0) {
-                timerMetElement.innerHTML = formatTimer(distanceMet);
-            } else {
-                timerMetElement.innerHTML = `${Math.ceil(Math.abs(distanceMet) / (1000 * 60 * 60 * 24))} 天后相识`;
-            }
-
-            // 计时器 2: 在一起
-            const distanceLove = now - DATE_LOVE;
-            if (distanceLove > 0) {
-                timerLoveElement.innerHTML = formatTimer(distanceLove);
-            } else {
-                const days = Math.ceil(Math.abs(distanceLove) / (1000 * 60 * 60 * 24));
-                timerLoveElement.innerHTML = `距离在一起的日子还有 ${days} 天!`;
-            }
-        }
-        
-        // 滚动动画初始化函数
-        function initScrollReveal() {
-            if (typeof ScrollReveal === 'undefined') return;
-
-            ScrollReveal().reveal('.scroll-reveal-item', {
-                delay: 200, 
-                distance: '30px', 
-                origin: 'bottom', 
-                duration: 900, 
-                easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
-                interval: 0 
-            });
-            // 确保图片网格初始内容显示
-            filterPhotos('all');
-        }
-
-        // --- 图片切换/过滤函数 (已修正按钮高亮逻辑) ---
-        function filterPhotos(category) {
-            const items = document.querySelectorAll('.photo-item');
-            // 选择所有按钮 (位于 .flex-wrap 容器内)
-            const buttons = document.querySelectorAll('.flex-wrap button'); 
-            
-            // 按钮高亮逻辑
-            buttons.forEach(btn => {
-                // 1. 移除所有按钮的高亮样式 (pink)
-                btn.classList.remove('bg-pink-500', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-800'); // 添加默认样式 (gray)
-
-                // 2. 确定按钮的 onclick 属性，并提取分类名
-                const onclickAttr = btn.getAttribute('onclick');
-                // 使用正则表达式安全地提取分类名
-                const match = onclickAttr.match(/filterPhotos\(['"](.*?)['"]\)/);
-                
-                // 确保匹配成功，并获取分类名
-                let targetCategory = match ? match[1] : '';
-                
-                if (targetCategory === category) {
-                    // 如果是当前点击的按钮，则应用高亮样式 (pink)
-                    btn.classList.remove('bg-gray-200', 'text-gray-800');
-                    btn.classList.add('bg-pink-500', 'text-white');
-                }
-            });
-
-            // 图片显示/隐藏逻辑 (保持不变)
-            items.forEach(item => {
-                item.classList.remove('active'); 
-                item.style.display = 'none';    
-            });
-
-            // 使用 setTimeout 延迟显示，以便触发 CSS 动画
-            setTimeout(() => {
-                items.forEach(item => {
-                    if (category === 'all' || item.classList.contains(category)) {
-                        item.style.display = 'block';
-                        item.classList.add('active'); // 添加激活类触发 fadeIn 动画
-                    }
-                });
-            }, 10); 
-        }
-
-
-        // 登录验证函数
         function handleLogin() {
-            const enteredUsername = usernameInput.value.trim();
-            const enteredPassword = passwordInput.value.trim();
+            const u = usernameInput.value.trim();
+            const p = passwordInput.value.trim();
 
-            if (enteredUsername === CORRECT_USERNAME && enteredPassword === CORRECT_PASSWORD) {
-                // 登录成功
-                loginCard.classList.add('opacity-0', '-translate-y-20'); 
+            if (u === CONFIG.correctUser && p === CONFIG.correctPass) {
+                // 登录成功动画
+                tiltCard.style.transform = "scale(0.8) translateY(-500px)";
+                tiltCard.style.opacity = "0";
                 
                 setTimeout(() => {
-                    loginContainer.classList.add('hidden');
+                    loginContainer.style.display = 'none';
                     mainContent.classList.remove('hidden');
+                    // 更换背景图层 (如果需要主页背景不同)
+                    document.getElementById('bg-layer').style.backgroundImage = "url('background.jpg')";
                     
                     setTimeout(() => {
                         mainContent.classList.remove('opacity-0');
-                        updateTimers();
-                        setInterval(updateTimers, 1000);
+                        initTimers();
                         initScrollReveal();
-                        filterPhotos('all'); // 默认显示全部照片
-                    }, 50); 
-                    
-                }, 700); 
-                
-            } else {
-                // 登录失败：播放“摇头”动画
-                loginCard.classList.add('shake');
-                setTimeout(() => {
-                    loginCard.classList.remove('shake');
+                        filterPhotos('all');
+                    }, 100);
                 }, 500);
-                alert("数字不对哦！这可是我们之间的秘密，再想想！");
+            } else {
+                // 错误动画
+                tiltCard.classList.add('shake');
+                setTimeout(() => tiltCard.classList.remove('shake'), 500);
+                // 简单的震动提示，不弹窗打断体验
+                usernameInput.value = '';
+                passwordInput.value = '';
+                usernameInput.placeholder = "再试一次...";
+                usernameInput.focus();
             }
         }
 
-        // 图片放大模态框函数
+        // 绑定 Enter 键
+        passwordInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleLogin(); });
+        loginBtn.addEventListener('click', handleLogin);
+
+        // 5. 计时器逻辑
+        function initTimers() {
+            const dMet = new Date(CONFIG.dateMet).getTime();
+            const dLove = new Date(CONFIG.dateLove).getTime();
+            
+            function update() {
+                const now = new Date().getTime();
+                document.getElementById('timer-met').innerText = formatTime(now - dMet);
+                
+                const diffLove = now - dLove;
+                if(diffLove > 0) {
+                    document.getElementById('timer-love').innerText = formatTime(diffLove);
+                } else {
+                    document.getElementById('timer-love').innerText = Math.ceil(Math.abs(diffLove)/(1000*60*60*24)) + " 天后";
+                }
+            }
+            setInterval(update, 1000);
+            update();
+        }
+
+        function formatTime(ms) {
+            const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+            return `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+        }
+
+        // 6. 过滤器逻辑 (修复并优化)
+        function filterPhotos(cat) {
+            // 按钮样式切换
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if(btn.getAttribute('onclick').includes(cat)) {
+                    btn.classList.remove('bg-white', 'text-gray-600');
+                    btn.classList.add('bg-pink-500', 'text-white');
+                } else {
+                    btn.classList.add('bg-white', 'text-gray-600');
+                    btn.classList.remove('bg-pink-500', 'text-white');
+                }
+            });
+
+            const items = document.querySelectorAll('.photo-item');
+            items.forEach(item => {
+                if(cat === 'all' || item.classList.contains(cat)) {
+                    item.classList.remove('hidden');
+                    // 稍微延迟添加动画类
+                    setTimeout(()=>item.style.opacity = '1', 50); 
+                } else {
+                    item.classList.add('hidden');
+                    item.style.opacity = '0';
+                }
+            });
+        }
+
+        // 7. ScrollReveal & 打字机触发
+        function initScrollReveal() {
+            const sr = ScrollReveal({
+                origin: 'bottom',
+                distance: '40px',
+                duration: 1000,
+                easing: 'cubic-bezier(0.5, 0, 0, 1)',
+                reset: false
+            });
+
+            sr.reveal('.scroll-reveal-item', { interval: 200 });
+            
+            // 特殊监听：当信件区域出现在屏幕时，触发打字机
+            sr.reveal('footer', {
+                beforeReveal: () => {
+                    setTimeout(startTypewriter, 500); // 稍微延迟一点开始打字
+                }
+            });
+        }
+
+        // 8. 模态框逻辑
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImage");
         const captionText = document.getElementById("caption");
-
-        function openModal(src, caption) {
-            modal.style.display = "block";
+        
+        window.openModal = function(src, alt) {
+            modal.style.display = "flex"; // 使用flex居中
             modalImg.src = src;
-            captionText.innerHTML = caption;
+            captionText.innerText = alt;
         }
-
-        function closeModal() {
+        
+        window.closeModal = function() {
             modal.style.display = "none";
         }
-        
-        // 监听 ESC 键关闭模态框
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
 
-        // 绑定事件监听器
-        loginBtn.addEventListener('click', handleLogin);
-        passwordInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                handleLogin();
-            }
-        });
-        
     </script>
 </body>
 </html>
